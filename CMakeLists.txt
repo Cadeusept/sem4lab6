@@ -30,6 +30,12 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
+hunter_add_package(Boost COMPONENTS log)
+find_package(Boost CONFIG REQUIRED log)
+
+hunter_add_package(picosha2)
+find_package(picosha2 CONFIG REQUIRED)
+
 add_library(${PROJECT_NAME} STATIC
   # enum your files and delete this comment
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/multithreads.cpp
@@ -38,6 +44,9 @@ add_library(${PROJECT_NAME} STATIC
 add_executable(demo
   ${CMAKE_CURRENT_SOURCE_DIR}/demo/main.cpp
 )
+
+target_link_libraries(${PROJECT_NAME} Boost::log)
+target_link_libraries(${PROJECT_NAME} picosha2::picosha2)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
