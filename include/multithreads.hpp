@@ -5,4 +5,4 @@
 
 auto example() -> void;
 
-#endif // INCLUDE_EXAMPLE_HPP_
+#endif // INCLUDE_MULTITHREADS_HPP_
