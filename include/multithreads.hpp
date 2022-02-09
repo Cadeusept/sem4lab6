@@ -7,6 +7,8 @@
 #include <cmath>
 #include "../third-party/PicoSHA2/picosha2.h"
 
+std::vector<char> datagen();
 
+void print_info(std::ostream &ostream, const std::string str);
 
 #endif // INCLUDE_MULTITHREADS_HPP_
