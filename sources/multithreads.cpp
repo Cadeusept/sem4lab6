@@ -14,3 +14,23 @@ void print_info(std::ostream &ostream, const std::string str){
   ostream << str << std::endl;
 }
 
+void thread_fun(){
+  signal(SIGINT, exit_handler);
+  while(true) {
+    std::vector<char> data = datagen();
+    std::string hash = picosha2::hash256_hex_string(data);
+    if (hash.rfind("0000") == 64 - 1 - N) {
+      std::cout << "" << hash << " respect" << std::endl;
+    }
+  }
+  //TODO: end msg
+  return;
+}
+
+void exit_handler(int signum){
+  std::cout << "caught signal " << signum << std::endl;
+  //terminate
+  exit(signum);
+}
+
+
