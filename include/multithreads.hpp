@@ -8,7 +8,17 @@
 #include <cmath>
 #include <csignal>
 #include <vector>
+#include <boost/core/null_deleter.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/expressions/keyword.hpp>
+#include <boost/log/sinks.hpp>
+#include <boost/log/sources/severity_logger.hpp>
+#include <boost/log/support/date_time.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/utility/setup/file.hpp>
 #include <iostream> //TODO: убрать библиотеку после отладки
 #include "../third-party/PicoSHA2/picosha2.h"
 
