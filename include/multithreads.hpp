@@ -3,6 +3,8 @@
 #ifndef INCLUDE_EXAMPLE_HPP_
 #define INCLUDE_EXAMPLE_HPP_
 
+#pragma once
+
 #include <thread>
 //#include <pthread.h>
 #include <cmath>
@@ -25,6 +27,8 @@
 
 namespace logging = boost::log;
 
+static volatile bool thread_flag = true;
+
 struct Hash{
   void work();
   const std::string requiredString = "0000";
@@ -32,7 +36,7 @@ struct Hash{
 
 void threadWork(Hash &hasher);
 
-std::vector<char> datagen();
+std::string datagen();
 
 void logging_preparation();
 

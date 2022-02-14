@@ -1,17 +1,22 @@
 #include <multithreads.hpp>
 
 int main(int argc, char *argv[]) {
+  srand(time(nullptr));
   unsigned int threadNum;
   logging_preparation();
   if (argc == 1) {
     threadNum = std::thread::hardware_concurrency();
   } else if (argc == 2) {
     threadNum = std::atoi(argv[1]);
+    if (threadNum > std::thread::hardware_concurrency())
+      threadNum = std::thread::hardware_concurrency();
   } else {
     BOOST_LOG_TRIVIAL(error) << "Invalid argument";
     throw std::invalid_argument("Invalid argument");
-    return 1;
+    //return 0;
   }
+
+  BOOST_LOG_TRIVIAL(trace) << "Number of threads is " << threadNum << std::endl;
 
   std::vector<std::thread> thread_arr;
   Hash hasher;
