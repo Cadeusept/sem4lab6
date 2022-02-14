@@ -27,15 +27,15 @@ void Hash::work(){
 void logging_preparation(){
   boost::shared_ptr< logging::core > core = logging::core::get();
 
-  boost::shared_ptr< sinks::text_file_backend > backend =
-      boost::make_shared< sinks::text_file_backend >(
-          keywords::file_name = "file_%5N.log",
-          keywords::rotation_size = 5 * 1024 * 1024,
-          keywords::format = "[%TimeStamp%]: %Message%",
-          keywords::time_based_rotation =
-              sinks::file::rotation_at_time_point(12, 0, 0));
+  boost::shared_ptr< logging::sinks::text_file_backend > backend =
+      boost::make_shared< logging::sinks::text_file_backend >(
+          logging::keywords::file_name = "file_%5N.log",
+          logging::keywords::rotation_size = 5 * 1024 * 1024,
+          logging::keywords::format = "[%TimeStamp%]: %Message%",
+          logging::keywords::time_based_rotation =
+              logging::sinks::file::rotation_at_time_point(12, 0, 0));
 
-  typedef sinks::synchronous_sink< sinks::text_file_backend > sink_t;
+  typedef logging::sinks::synchronous_sink< logging::sinks::text_file_backend > sink_t;
   boost::shared_ptr< sink_t > sink(new sink_t(backend));
   // sink ->set_filter(logging::trivial::severity >= logging::trivial::info);
   core->add_sink(sink);

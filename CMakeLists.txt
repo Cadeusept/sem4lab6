@@ -33,9 +33,9 @@ find_package(GTest CONFIG REQUIRED)
 #installing boost::log
 #ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
 #SET(Boost_USE_STATIC_LIBS ON)
-hunter_add_package(Boost COMPONENTS system thread filesystem log)
+hunter_add_package(Boost COMPONENTS log system thread filesystem)
 find_package(Boost CONFIG REQUIRED filesystem)
-find_package(Boost CONFIG REQUIRED system log_setup thread log)
+find_package(Boost CONFIG REQUIRED log system log_setup thread)
 
 add_library(${PROJECT_NAME} STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/multithreads.cpp
@@ -47,8 +47,13 @@ add_executable(demo
 
 
 target_link_libraries(${PROJECT_NAME} Boost::log)
+target_link_libraries(${PROJECT_NAME} Boost::thread)
+target_link_libraries(${PROJECT_NAME} Boost::filesystem)
+target_link_libraries(${PROJECT_NAME} Boost::log_setup)
+target_link_libraries(${PROJECT_NAME} Boost::system)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
+        ${BOOST_INCLUDE_DIRS}
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
   "$<INSTALL_INTERFACE:include>"
 )

@@ -23,6 +23,8 @@
 #include <iostream> //TODO: убрать библиотеку после отладки
 #include "../third-party/PicoSHA2/picosha2.h"
 
+namespace logging = boost::log;
+
 struct Hash{
   void work();
   const std::string requiredString = "0000";
