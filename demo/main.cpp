@@ -1,15 +1,15 @@
 #include <multithreads.hpp>
-#include <iostream>
-#include <vector>
 
 int main(int argc, char *argv[]) {
   unsigned int threadNum;
+  logging_preparation();
   if (argc == 1) {
     threadNum = std::thread::hardware_concurrency();
   } else if (argc == 2) {
     threadNum = std::atoi(argv[1]);
   } else {
-    throw std::invalid_argument("Incorrect parameters!");
+    BOOST_LOG_TRIVIAL(error) << "Invalid argument";
+    throw std::invalid_argument("Invalid argument");
     return 1;
   }
 

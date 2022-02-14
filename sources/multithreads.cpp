@@ -25,16 +25,20 @@ void Hash::work(){
 }
 
 void logging_preparation(){
-  boost::log::register_simple_formatter_factory<
-      boost::log::trivial::severity_level, char>("Severity");
-  static const std::string format =
-      "[%TimeStamp%][%Severity%][%ThreadID%]: %Message%";
+  boost::shared_ptr< logging::core > core = logging::core::get();
 
-  auto all = boost::log::add_file_log(
-      boost::log::keywords::file_name = "All/log_%N.log",
-      boost::log::keywords::rotation_size = 128 * 1024 * 1024,
-      boost::log::keywords::format = format);
-  all->set_filter(boost::log::trivial::severity >= boost::log::trivial::trace);
+  boost::shared_ptr< sinks::text_file_backend > backend =
+      boost::make_shared< sinks::text_file_backend >(
+          keywords::file_name = "file_%5N.log",
+          keywords::rotation_size = 5 * 1024 * 1024,
+          keywords::format = "[%TimeStamp%]: %Message%",
+          keywords::time_based_rotation =
+              sinks::file::rotation_at_time_point(12, 0, 0));
+
+  typedef sinks::synchronous_sink< sinks::text_file_backend > sink_t;
+  boost::shared_ptr< sink_t > sink(new sink_t(backend));
+  // sink ->set_filter(logging::trivial::severity >= logging::trivial::info);
+  core->add_sink(sink);
 }
 
 void exit_handler(int signum){

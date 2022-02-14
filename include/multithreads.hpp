@@ -8,6 +8,7 @@
 #include <cmath>
 #include <csignal>
 #include <vector>
+#include <boost/log/utility/setup.hpp>
 #include <boost/core/null_deleter.hpp>
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
