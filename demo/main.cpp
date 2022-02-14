@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
 
   std::vector<std::thread> thread_arr;
   Hash hasher;
+  std::signal(SIGINT, exit_handler);
   for (unsigned int i = 0; i < threadNum; ++i){
     thread_arr.emplace_back(threadWork, std::ref(hasher));
   }
