@@ -6,7 +6,7 @@ volatile bool json_flag = false;
 
 Json json_arr;
 
-std::string datagen(){
+std::string datagen() {
   std::vector<char> data;
   for (int i=0; i<50; ++i)
     data.push_back(static_cast<char>(std::rand() % 95 + 32));
@@ -14,11 +14,11 @@ std::string datagen(){
   return outp;
 }
 
-void threadWork(Hash &hasher){
+void threadWork(Hash &hasher) {
   hasher.work();
 }
 
-void logging_preparation(){
+void logging_preparation() {
   logging::register_simple_formatter_factory<
       logging::trivial::severity_level, char>("Severity");
   static const std::string format =
@@ -45,7 +45,7 @@ void logging_preparation(){
   logging::add_common_attributes();
 }
 
-void Hash::work(){
+void Hash::work() {
   while(::thread_flag) {
     std::string data = datagen();
     std::string hash = picosha2::hash256_hex_string(data);
@@ -74,7 +74,7 @@ void Hash::work(){
   return;
 }
 
-void exit_handler(int signum){
+void exit_handler(int signum) {
   BOOST_LOG_TRIVIAL(trace) << "Caught signal " <<
       signum << ", terminating program..." << std::endl;
   std::cout << "Caught signal " <<
