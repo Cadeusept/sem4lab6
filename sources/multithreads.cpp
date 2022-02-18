@@ -2,6 +2,10 @@
 
 #include <multithreads.hpp>
 
+volatile bool json_flag = false;
+
+Json json_arr;
+
 std::string datagen(){
   std::vector<char> data;
   for (int i=0; i<50; ++i)
@@ -42,26 +46,27 @@ void logging_preparation(){
 }
 
 void Hash::work(){
-  while(thread_flag) {
+  while(::thread_flag) {
     std::string data = datagen();
     std::string hash = picosha2::hash256_hex_string(data);
     BOOST_LOG_TRIVIAL(trace) << "ATTEMPT\t" << data << "\tHash\t" << hash
                              << std::endl;
-    if (hash.substr(hash.size() - 4, hash.size()) == "0000") {
+    if (hash.substr(hash.size() - 4, hash.size()) == Hash::requiredString) {
       BOOST_LOG_TRIVIAL(info) << "CORRECT\t" << data << "\tHash\t" << hash
                              << std::endl;
-      if (json_flag) {
+      if (::json_flag) {
         nlohmann::json json_obj = nlohmann::json::object();
         const auto timestamp =
                                             std::chrono::system_clock::now();
+
+        json_obj["data"] = data;
+        json_obj["hash"] = hash;
         json_obj["timestamp"] = std::chrono::duration_cast
             <std::chrono::seconds>(timestamp.time_since_epoch()).count();
-        json_obj["hash"] = hash;
-        json_obj["data"] = data;
-        //mtx.lock();
-        std::cout << std::endl << "изменение в жсон std::endl" << json_obj << std::endl << json_arr.array << std::endl; //TODO удалить
+
+        mtx.lock();
         json_arr.array.push_back(json_obj);
-        //mtx.unlock();
+        mtx.unlock();
       }
     }
   }
@@ -76,5 +81,3 @@ void exit_handler(int signum){
       signum << ", terminating program..." << std::endl;
   thread_flag = false;
 }
-
-

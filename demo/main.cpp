@@ -4,7 +4,6 @@
 
 int main(int argc, char *argv[]) {
   srand(time(nullptr));
-  mtx.unlock();
   unsigned int threadNum;
   logging_preparation();
   std::ofstream json_file;
@@ -21,7 +20,6 @@ int main(int argc, char *argv[]) {
   } else {
     BOOST_LOG_TRIVIAL(error) << "Invalid argument";
     throw std::invalid_argument("Invalid argument");
-    //return 0;
   }
 
   BOOST_LOG_TRIVIAL(trace) << "Number of threads is " << threadNum << std::endl;

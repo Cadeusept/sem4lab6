@@ -29,19 +29,19 @@
 
 namespace logging = boost::log;
 
-static volatile bool thread_flag = true;
-static std::mutex mtx;
-static volatile bool json_flag = false;
-
 struct Json{
   nlohmann::json array = nlohmann::json::array();
 };
-Json json_arr;
 
 struct Hash{
   void work();
   const std::string requiredString = "0000";
 };
+
+static volatile bool thread_flag = true;
+static std::mutex mtx;
+extern volatile bool json_flag;
+extern Json json_arr;
 
 void threadWork(Hash &hasher);
 
