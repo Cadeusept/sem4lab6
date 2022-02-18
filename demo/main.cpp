@@ -38,5 +38,6 @@ int main(int argc, char *argv[]) {
     json_file << json_arr.array << std::endl;
   }
 
+  json_file.close();
   return 0;
 }
