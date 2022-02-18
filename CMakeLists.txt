@@ -30,6 +30,9 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
+hunter_add_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 #installing boost::log
 #ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
 #SET(Boost_USE_STATIC_LIBS ON)
@@ -51,6 +54,7 @@ target_link_libraries(${PROJECT_NAME} Boost::thread)
 target_link_libraries(${PROJECT_NAME} Boost::filesystem)
 target_link_libraries(${PROJECT_NAME} Boost::log_setup)
 target_link_libraries(${PROJECT_NAME} Boost::system)
+target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${BOOST_INCLUDE_DIRS}

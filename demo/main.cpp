@@ -1,15 +1,22 @@
+// Copyright 2021 Your Name <your_email>
+
 #include <multithreads.hpp>
 
 int main(int argc, char *argv[]) {
   srand(time(nullptr));
   unsigned int threadNum;
   logging_preparation();
+  std::ofstream json_file;
   if (argc == 1) {
     threadNum = std::thread::hardware_concurrency();
-  } else if (argc == 2) {
+  } else if (argc == 2 || argc == 3) {
     threadNum = std::atoi(argv[1]);
     if (threadNum > std::thread::hardware_concurrency())
       threadNum = std::thread::hardware_concurrency();
+    if (argc == 3) {
+      json_file.open(std::string(argv[2]));
+      json_flag = true;
+    }
   } else {
     BOOST_LOG_TRIVIAL(error) << "Invalid argument";
     throw std::invalid_argument("Invalid argument");
@@ -28,4 +35,9 @@ int main(int argc, char *argv[]) {
     thread.join();
   }
 
+  if (json_flag) {
+    json_file << json_arr.array << std::endl;
+  }
+
+  return 0;
 }

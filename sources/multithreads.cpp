@@ -50,6 +50,18 @@ void Hash::work(){
     if (hash.substr(hash.size() - 4, hash.size()) == "0000") {
       BOOST_LOG_TRIVIAL(info) << "CORRECT\t" << data << "\tHash\t" << hash
                              << std::endl;
+      if (json_flag) {
+        nlohmann::json json_obj = nlohmann::json::object();
+        const auto timestamp =
+                                            std::chrono::system_clock::now();
+        json_obj["timestamp"] = std::chrono::duration_cast
+            <std::chrono::seconds>(timestamp.time_since_epoch()).count();
+        json_obj["hash"] = hash;
+        json_obj["data"] = data;
+        mtx.lock();
+        json_arr.array.push_back(json_obj);
+        mtx.unlock();
+      }
     }
   }
 
@@ -58,6 +70,8 @@ void Hash::work(){
 
 void exit_handler(int signum){
   BOOST_LOG_TRIVIAL(trace) << "Caught signal " <<
+      signum << ", terminating program..." << std::endl;
+  std::cout << "Caught signal " <<
       signum << ", terminating program..." << std::endl;
   thread_flag = false;
 }

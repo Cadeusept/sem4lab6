@@ -6,7 +6,6 @@
 #pragma once
 
 #include <thread>
-//#include <pthread.h>
 #include <cmath>
 #include <csignal>
 #include <vector>
@@ -24,10 +23,20 @@
 #include <boost/log/utility/setup/file.hpp>
 #include <iostream> //TODO: убрать библиотеку после отладки
 #include "../third-party/PicoSHA2/picosha2.h"
+#include <nlohmann/json.hpp>
+#include <mutex>
+#include <chrono>
 
 namespace logging = boost::log;
 
 static volatile bool thread_flag = true;
+static std::mutex mtx;
+static volatile bool json_flag = false;
+
+struct Json{
+  nlohmann::json array = nlohmann::json::array();
+};
+static Json json_arr;
 
 struct Hash{
   void work();
