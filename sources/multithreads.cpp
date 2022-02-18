@@ -58,9 +58,10 @@ void Hash::work(){
             <std::chrono::seconds>(timestamp.time_since_epoch()).count();
         json_obj["hash"] = hash;
         json_obj["data"] = data;
-        mtx.lock();
+        //mtx.lock();
+        std::cout << std::endl << "изменение в жсон std::endl" << json_obj << std::endl << json_arr.array << std::endl; //TODO удалить
         json_arr.array.push_back(json_obj);
-        mtx.unlock();
+        //mtx.unlock();
       }
     }
   }

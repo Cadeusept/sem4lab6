@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[]) {
   srand(time(nullptr));
+  mtx.unlock();
   unsigned int threadNum;
   logging_preparation();
   std::ofstream json_file;

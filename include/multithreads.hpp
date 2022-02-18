@@ -21,7 +21,7 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/utility/setup/console.hpp>
 #include <boost/log/utility/setup/file.hpp>
-#include <iostream> //TODO: убрать библиотеку после отладки
+#include <iostream>
 #include "../third-party/PicoSHA2/picosha2.h"
 #include <nlohmann/json.hpp>
 #include <mutex>
@@ -36,7 +36,7 @@ static volatile bool json_flag = false;
 struct Json{
   nlohmann::json array = nlohmann::json::array();
 };
-static Json json_arr;
+Json json_arr;
 
 struct Hash{
   void work();
